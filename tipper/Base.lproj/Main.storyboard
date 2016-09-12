@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="ske-gX-c9n">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--Tipper-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="tipper" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" id="6cm-zc-ba5">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="176"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="MKK-Jd-9TD">
+                                        <rect key="frame" x="281" y="88" width="24" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="25"/>
+                                        <color key="textColor" red="0.1215686275" green="0.28627450980000002" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="$" textAlignment="right" minimumFontSize="17" id="AVa-Yn-7ws">
+                                        <rect key="frame" x="8" y="0.0" width="304" height="68"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="textColor" red="0.1215686275" green="0.28627450980000002" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="50"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="decimalPad"/>
+                                        <connections>
+                                            <action selector="billFieldChange:" destination="BYZ-38-t0r" eventType="editingChanged" id="R8q-gk-Gt1"/>
+                                        </connections>
+                                    </textField>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="1" maxValue="10" id="oBs-z2-DxO">
+                                        <rect key="frame" x="20" y="125" width="200" height="31"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="minimumTrackTintColor" red="0.1215686275" green="0.28627450980000002" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="maximumTrackTintColor" red="0.1215686275" green="0.28627450980000002" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="thumbTintColor" red="0.1215686275" green="0.28627450980000002" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="peopleSliderChange:" destination="BYZ-38-t0r" eventType="valueChanged" id="KOj-Of-9hj"/>
+                                        </connections>
+                                    </slider>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="15" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="RFd-BD-QDa">
+                                        <rect key="frame" x="226" y="88" width="43" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="20"/>
+                                        <color key="textColor" red="0.1215686275" green="0.28627450980000002" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9Vd-CP-3r1">
+                                        <rect key="frame" x="226" y="129" width="43" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="20"/>
+                                        <color key="textColor" red="0.1215686275" green="0.28627450980000002" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="peopleBlue.png" id="Qn8-ud-nAv">
+                                        <rect key="frame" x="279" y="127" width="26" height="26"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <rect key="contentStretch" x="1" y="1" width="0.5" height="0.5"/>
+                                    </imageView>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="15" minValue="10" maxValue="25" id="w3F-zM-ufa">
+                                        <rect key="frame" x="20" y="84" width="200" height="31"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="minimumTrackTintColor" red="0.1215686275" green="0.28627450980000002" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="maximumTrackTintColor" red="0.1215686275" green="0.28627450980000002" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="thumbTintColor" red="0.1215686275" green="0.28627450980000002" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="percentageSliderChange:" destination="BYZ-38-t0r" eventType="valueChanged" id="XZV-WE-gVu"/>
+                                        </connections>
+                                    </slider>
+                                </subviews>
+                                <color key="backgroundColor" red="0.81568627450980391" green="0.8784313725490196" blue="0.94901960784313721" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                            <view contentMode="scaleToFill" id="Xe8-9b-no4">
+                                <rect key="frame" x="0.0" y="176" width="320" height="117"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$0.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rAY-y1-dLo">
+                                        <rect key="frame" x="34" y="19" width="273" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="20"/>
+                                        <color key="textColor" red="0.81568627449999997" green="0.87843137250000003" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$0.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="arX-OT-duQ">
+                                        <rect key="frame" x="34" y="51" width="273" height="46"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="40"/>
+                                        <color key="textColor" red="0.81568627449999997" green="0.87843137250000003" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="=" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="e9P-d8-uLd">
+                                        <rect key="frame" x="13" y="58" width="42" height="31"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="40"/>
+                                        <color key="textColor" red="0.81568627449999997" green="0.87843137250000003" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="tip" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="65W-ax-ZtZ">
+                                        <rect key="frame" x="13" y="11" width="42" height="37"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="20"/>
+                                        <color key="textColor" red="0.81568627449999997" green="0.87843137250000003" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.1215686275" green="0.28627450980000002" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                            <view contentMode="scaleToFill" id="1lz-8T-Ai1">
+                                <rect key="frame" x="0.0" y="291" width="320" height="213"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.1215686275" green="0.28627450980000002" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.81568627449999997" green="0.87843137250000003" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
+                        <gestureRecognizers/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="O1e-iz-IgK" appends="YES" id="HAU-fX-imW"/>
+                        </connections>
+                    </view>
+                    <navigationItem key="navigationItem" title="Tipper" id="16O-lT-i1j">
+                        <barButtonItem key="rightBarButtonItem" image="gear.png" style="plain" id="pd8-mR-wId">
+                            <color key="tintColor" red="0.1215686275" green="0.28627450980000002" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <segue destination="jNj-nw-HYP" kind="push" id="QTM-Md-zGO"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="backgroundViewBottom" destination="1lz-8T-Ai1" id="85z-CH-gvP"/>
+                        <outlet property="backgroundViewTop" destination="8bC-Xf-vdC" id="VX4-TR-RMV"/>
+                        <outlet property="billField" destination="AVa-Yn-7ws" id="AYR-Ck-b3q"/>
+                        <outlet property="bottomView" destination="Xe8-9b-no4" id="bCJ-Jk-Lbn"/>
+                        <outlet property="peopleIcon" destination="Qn8-ud-nAv" id="Do4-Kq-vtp"/>
+                        <outlet property="peopleLabel" destination="9Vd-CP-3r1" id="qJe-hI-koi"/>
+                        <outlet property="peopleSlider" destination="oBs-z2-DxO" id="lhg-vc-WKS"/>
+                        <outlet property="percentageIcon" destination="MKK-Jd-9TD" id="eo2-Xj-k3j"/>
+                        <outlet property="percentageLabel" destination="RFd-BD-QDa" id="WuU-rm-SsA"/>
+                        <outlet property="percentageSlider" destination="w3F-zM-ufa" id="8vr-fx-zRn"/>
+                        <outlet property="settingsIcon" destination="pd8-mR-wId" id="Hrh-y4-K7g"/>
+                        <outlet property="tipLabel" destination="rAY-y1-dLo" id="M62-gA-LfD"/>
+                        <outlet property="tipNameLabel" destination="e9P-d8-uLd" id="gpB-A4-eg0"/>
+                        <outlet property="topView" destination="6cm-zc-ba5" id="IIf-VU-op4"/>
+                        <outlet property="totalLabel" destination="arX-OT-duQ" id="y98-a8-to6"/>
+                        <outlet property="totalNameLabel" destination="65W-ax-ZtZ" id="qi7-pZ-kPD"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="O1e-iz-IgK"/>
+            </objects>
+            <point key="canvasLocation" x="800" y="307"/>
+        </scene>
+        <!--Settings View Controller-->
+        <scene sceneID="jEL-cT-XK2">
+            <objects>
+                <viewController id="jNj-nw-HYP" customClass="SettingsViewController" customModule="tipper" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="pRW-nf-ri1">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" id="LtK-LG-pa8">
+                                <rect key="frame" x="8" y="15" width="305" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Default Tip" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fbL-5t-5Yh">
+                                        <rect key="frame" x="8" y="1" width="149" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.1215686275" green="0.28627450980000002" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="58c-C3-Qmy">
+                                <rect key="frame" x="276" y="59" width="24" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="20"/>
+                                <color key="textColor" red="0.1215686275" green="0.28627450980000002" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="15" minValue="10" maxValue="25" id="yDq-Jm-SpH">
+                                <rect key="frame" x="15" y="55" width="223" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="minimumTrackTintColor" red="0.1215686275" green="0.28627450980000002" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="maximumTrackTintColor" red="0.1215686275" green="0.28627450980000002" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="thumbTintColor" red="0.1215686275" green="0.28627450980000002" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="settingsTipSliderChange:" destination="jNj-nw-HYP" eventType="valueChanged" id="zul-4S-vGj"/>
+                                </connections>
+                            </slider>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="1" maxValue="10" id="zXs-vj-ZCN">
+                                <rect key="frame" x="15" y="171" width="223" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="minimumTrackTintColor" red="0.1215686275" green="0.28627450980000002" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="maximumTrackTintColor" red="0.1215686275" green="0.28627450980000002" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="thumbTintColor" red="0.1215686275" green="0.28627450980000002" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="settingsPeopleSliderChange:" destination="jNj-nw-HYP" eventType="valueChanged" id="kyB-sy-uMe"/>
+                                </connections>
+                            </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="15" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="XT8-TD-R80">
+                                <rect key="frame" x="244" y="59" width="26" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="15"/>
+                                <color key="textColor" red="0.1215686275" green="0.28627450980000002" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="w6o-Kl-amU">
+                                <rect key="frame" x="244" y="175" width="22" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="15"/>
+                                <color key="textColor" red="0.1215686275" green="0.28627450980000002" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" id="iNg-Ok-93p">
+                                <rect key="frame" x="8" y="130" width="305" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Default Number of People" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zGB-v5-lQu">
+                                        <rect key="frame" x="8" y="0.0" width="212" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.1215686275" green="0.28627450980000002" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                            <view contentMode="scaleToFill" id="hmu-AY-WSD">
+                                <rect key="frame" x="9" y="245" width="304" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Currency Symbol" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="W7i-bF-ugd">
+                                        <rect key="frame" x="8" y="0.0" width="212" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.1215686275" green="0.28627450980000002" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                            <view contentMode="scaleToFill" id="bLQ-2P-EZB">
+                                <rect key="frame" x="8" y="360" width="305" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Color Theme" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wcq-dc-Qmw">
+                                        <rect key="frame" x="8" y="0.0" width="212" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.1215686275" green="0.28627450980000002" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="fzx-Ff-oZN">
+                                <rect key="frame" x="17" y="286" width="283" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="$"/>
+                                    <segment title="£"/>
+                                    <segment title="€"/>
+                                    <segment title="¥"/>
+                                    <segment title="₩"/>
+                                </segments>
+                                <color key="tintColor" red="0.1215686275" green="0.28627450980000002" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="currencyControlChange:" destination="jNj-nw-HYP" eventType="valueChanged" id="VOt-7a-jWa"/>
+                                </connections>
+                            </segmentedControl>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="WFd-PK-Yej">
+                                <rect key="frame" x="17" y="401" width="283" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="Dark"/>
+                                    <segment title="Light"/>
+                                    <segment title="Blue"/>
+                                    <segment title="Red"/>
+                                </segments>
+                                <color key="tintColor" red="0.1215686275" green="0.28627450980000002" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="themeControlChange:" destination="jNj-nw-HYP" eventType="valueChanged" id="wDP-50-eRa"/>
+                                </connections>
+                            </segmentedControl>
+                            <imageView userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="peopleBlue.png" id="e1k-xx-NbI">
+                                <rect key="frame" x="276" y="174" width="23" height="23"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <rect key="contentStretch" x="1" y="1" width="0.5" height="0.5"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.81568627449999997" green="0.87843137250000003" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="T8G-mA-SsL">
+                        <barButtonItem key="backBarButtonItem" title="&lt;" id="S30-mb-1Ny"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="backgroundView" destination="pRW-nf-ri1" id="WwS-8a-WEg"/>
+                        <outlet property="currencySection" destination="hmu-AY-WSD" id="e23-0c-SmX"/>
+                        <outlet property="currencySectionlabel" destination="W7i-bF-ugd" id="9Xz-Vs-z9N"/>
+                        <outlet property="navBar" destination="T8G-mA-SsL" id="jiG-ps-hjj"/>
+                        <outlet property="peopleSection" destination="iNg-Ok-93p" id="MLs-xU-Njg"/>
+                        <outlet property="peopleSectionLabel" destination="zGB-v5-lQu" id="0JA-aa-YTc"/>
+                        <outlet property="settingsCurrencyControl" destination="fzx-Ff-oZN" id="0B0-Af-Sdf"/>
+                        <outlet property="settingsPeopleIcon" destination="e1k-xx-NbI" id="7lG-w7-8eV"/>
+                        <outlet property="settingsPeopleLabel" destination="w6o-Kl-amU" id="fHv-Di-jhz"/>
+                        <outlet property="settingsPeopleSlider" destination="zXs-vj-ZCN" id="MNI-21-CQn"/>
+                        <outlet property="settingsThemeControl" destination="WFd-PK-Yej" id="TEw-Pi-u1f"/>
+                        <outlet property="settingsTipIcon" destination="58c-C3-Qmy" id="Ada-Vy-k7x"/>
+                        <outlet property="settingsTipLabel" destination="XT8-TD-R80" id="dtr-oO-Vn9"/>
+                        <outlet property="settingsTipSlider" destination="yDq-Jm-SpH" id="LSf-Ar-gCS"/>
+                        <outlet property="themeSection" destination="bLQ-2P-EZB" id="Tqk-MN-BRR"/>
+                        <outlet property="themeSectionLabel" destination="wcq-dc-Qmw" id="kaG-gz-lun"/>
+                        <outlet property="tipSection" destination="LtK-LG-pa8" id="arf-0B-GEK"/>
+                        <outlet property="tipSectionLabel" destination="fbL-5t-5Yh" id="hqU-Bi-TFc"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Sm7-8l-Iiw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1312" y="210"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="qIX-hP-Jxu">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ske-gX-c9n" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="Qho-gV-G8I">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.81568627449999997" green="0.87843137250000003" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" red="0.12156862745098039" green="0.28627450980392155" blue="0.4392156862745098" alpha="1" colorSpace="calibratedRGB"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="1Tr-MK-UoQ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zMX-sT-whh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="251" y="412"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="gear.png" width="32" height="32"/>
+        <image name="peopleBlue.png" width="32" height="33"/>
+    </resources>
+</document>
