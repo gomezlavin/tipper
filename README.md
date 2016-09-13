@@ -4,7 +4,7 @@
 
 Submitted by: **Santiago Gomez**
 
-Time spent: **24** hours spent in total
+Time spent: **15** hours spent in total
 
 ## User Stories
 
@@ -40,7 +40,11 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+Building the app was really fun! Being used to Node and Javascript from my day to day work, it was really great to work with swift because it is really similar in terms of syntax.  I think that my main struggle was finding the correct attributes for each of the UI elements in the app.  Getting values from them or finding the right attribute to change a color was complicated since I didn't know what properties existed or not.  Since I added the feature to change the color theme, I had to go through many UI properties to get it working correctly.
+
+It's good to come back to a compiling language, although at times I wish those let vs var warnings would leave me alone.  The one thing I didn't like about Swift was the way it handles colors.  I am very used to RGB or hex from web development, and having to convert all the colors to Swift's UI Color system was a pain.
+
+Finally, another one of my main struggles was casting variables.  I am used to javascript's flexibility, and casting in Swift was sometimes not as intuitive as I thought it would be, sometimes requiring additional steps to get the desired value. E.g. reversing an Array gives you a ReverseCollection, which is no longer an array, so you have to cast it again if you want to re-assign it to an array.
 
 ## License
 
