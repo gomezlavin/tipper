@@ -192,19 +192,32 @@ class ViewController: UIViewController {
         var billCharacters = Array(billString.characters)
         let totalCharacters = Array(totalLabel.text!.characters)
         
-        
+        // Only allow digits and period
         if (permitedCharacters.indexOf(String(billCharacters[billCharacters.endIndex-1])) == nil) {
             billCharacters.popLast()
         }
         
+        // Limit the max length of the Total Field
         if (totalCharacters.count > maxLengthTotal) {
             billCharacters.popLast()
         }
         
+        // Limit the max length of the Bill Field
         if (billCharacters.count > maxLengthBill) {
             billCharacters.popLast()
         }
         
+        // Allow only one zero
+        if (billCharacters.count > 1 && billCharacters[0] == "0" && billCharacters[1] == "0") {
+            billCharacters.popLast()
+        }
+        
+        // Trim starting zero if not followed by period
+        if (billCharacters.count > 1 && billCharacters[0] == "0") {
+            billCharacters.removeFirst()
+        }
+        
+        // Allowing only one period
         if (billCharacters[billCharacters.endIndex-1] == ".") {
             if (billCharacters.count < 2) {
                 billCharacters.popLast()
