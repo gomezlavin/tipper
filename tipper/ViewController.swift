@@ -55,6 +55,9 @@ class ViewController: UIViewController {
             switch now.compare(expiration) {
             case .OrderedAscending, .OrderedSame:
                 billField.text = (defaults.objectForKey("bill") as! String)
+                if (currencyValues.indexOf(billField.text!) != nil) {
+                    calculateTip()
+                }
             case .OrderedDescending:
                 billField.text = currencySymbol
             }
@@ -213,12 +216,12 @@ class ViewController: UIViewController {
         }
         
         // Trim starting zero if not followed by period
-        if (billCharacters.count > 1 && billCharacters[0] == "0") {
+        if (billCharacters.count > 1 && billCharacters[0] == "0" && billCharacters[1] != ".") {
             billCharacters.removeFirst()
         }
         
         // Allowing only one period
-        if (billCharacters[billCharacters.endIndex-1] == ".") {
+        if (billCharacters.endIndex > 0 && billCharacters[billCharacters.endIndex-1] == ".") {
             if (billCharacters.count < 2) {
                 billCharacters.popLast()
             } else {
