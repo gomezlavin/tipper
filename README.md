@@ -4,7 +4,7 @@
 
 Submitted by: **Santiago Gomez**
 
-Time spent: **24** hours spent in total
+Time spent: **15** hours spent in total
 
 ## User Stories
 
