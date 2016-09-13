@@ -34,6 +34,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Setting default NSUserDefaults for the first time the app is used
         if (defaults.objectForKey("tipPercentage") == nil) {
             defaults.setFloat(15, forKey: "tipPercentage")
             defaults.setFloat(1, forKey: "peopleNumber")
@@ -42,6 +43,7 @@ class ViewController: UIViewController {
             defaults.synchronize()
         }
         
+        // Save the value of the bill field unless 10 minutes have passed by
         currencySymbol = currencyValues[defaults.integerForKey("currencySymbol")]
         if (defaults.objectForKey("bill") != nil && defaults.objectForKey("expiryTime") != nil) {
             let now = NSDate()
@@ -113,6 +115,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func percentageSliderChange(sender: AnyObject) {
+        // Locking slider intervals to fixed integer positions
         let roundedValue = round(self.percentageSlider.value)
         percentageSlider.setValue(roundedValue, animated: true)
         percentageLabel.text = String(format: "%.0f", roundedValue)
@@ -120,6 +123,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func peopleSliderChange(sender: AnyObject) {
+        // Locking slider intervals to fixed integer positions
         let roundedValue = round(self.peopleSlider.value)
         peopleSlider.setValue(roundedValue, animated: true)
         peopleLabel.text = String(format: "%.0f", roundedValue)
@@ -146,6 +150,8 @@ class ViewController: UIViewController {
         totalLabel.text = currencySymbol + formatter.stringFromNumber(total)!
     }
     
+    // Function to format the bill field using comma as group separator
+    // Had to build function because formatter wasn't allowing "." in the field for some reason
     func fieldFormatter(billCharacters: [Character]) -> String {
         if (billCharacters.count > 3) {
             if (billCharacters.indexOf(".") != nil) {
@@ -157,8 +163,6 @@ class ViewController: UIViewController {
                     var reversedArray = Array(intArray.reverse())
                     for i in 0 ..< reversedArray.count {
                         if (i != 0 && i % 3 == 0) {
-                            print(i%3)
-                            print(i)
                             reversedArray.insert(",", atIndex: i+(i/3-1))
                         }
                     }
@@ -180,6 +184,7 @@ class ViewController: UIViewController {
         return String(billCharacters)
     }
     
+    // Function for restrict user input into the billField
     func validateBillLabel (billString: String) -> String {
         let permitedCharacters = ["0","1","2","3","4","5","6","7","8","9","."]
         let maxLengthBill = 10
@@ -219,6 +224,7 @@ class ViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        // Loading user defaults
         let tipPercentage = defaults.floatForKey("tipPercentage")
         let peopleNumber = defaults.floatForKey("peopleNumber")
         currencySymbol = currencyValues[defaults.integerForKey("currencySymbol")]
@@ -280,6 +286,7 @@ class ViewController: UIViewController {
         }
     }
     
+    // Function to change the app's color theme in this view based on user defaults
     func changeColorTheme(style: String, kb: String, lr: Float, lg: Float, lb: Float, dr: Float, dg: Float, db: Float, img: String) {
         let lr = CGFloat(lr)
         let lg = CGFloat(lg)
@@ -370,10 +377,11 @@ class ViewController: UIViewController {
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
+        // Saving billField value for 10 minutes
         defaults.setFloat(15, forKey: "tipPercentage")
         defaults.setObject(billField.text!, forKey: "bill")
         let now = NSDate()
-        let futureDate = now.dateByAddingTimeInterval(1.0 * 60.0)
+        let futureDate = now.dateByAddingTimeInterval(10.0 * 60.0)
         defaults.setObject(futureDate, forKey: "expiryTime")
         defaults.synchronize()
     }

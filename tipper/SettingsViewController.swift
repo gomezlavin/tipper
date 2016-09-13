@@ -69,6 +69,7 @@ class SettingsViewController: UIViewController {
         }
     }
     
+    // Function to change the app's color theme in this view based on user defaults
     func changeColorTheme(style: String, kb: String, lr: Float, lg: Float, lb: Float, dr: Float, dg: Float, db: Float, img: String) {
         let lr = CGFloat(lr)
         let lg = CGFloat(lg)
