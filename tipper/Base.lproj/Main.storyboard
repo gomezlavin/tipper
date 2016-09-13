@@ -124,7 +124,7 @@
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" title="Tipper" id="16O-lT-i1j">
-                        <barButtonItem key="rightBarButtonItem" image="gear.png" style="plain" id="pd8-mR-wId">
+                        <barButtonItem key="rightBarButtonItem" image="gear.png" style="done" id="pd8-mR-wId">
                             <color key="tintColor" red="0.1215686275" green="0.28627450980000002" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <segue destination="jNj-nw-HYP" kind="push" id="QTM-Md-zGO"/>

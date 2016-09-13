@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITextFieldDelegate {
+class ViewController: UIViewController {
 
     @IBOutlet var backgroundViewTop: UIView!
     @IBOutlet weak var topView: UIView!
@@ -33,18 +33,32 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        billField.delegate = self
         
         if (defaults.objectForKey("tipPercentage") == nil) {
             defaults.setFloat(15, forKey: "tipPercentage")
             defaults.setFloat(1, forKey: "peopleNumber")
             defaults.setInteger(0, forKey: "currencySymbol")
-            //            defaults.setInteger(0, forKey: "colorTheme")
+            defaults.setInteger(0, forKey: "colorTheme")
             defaults.synchronize()
         }
         
         currencySymbol = currencyValues[defaults.integerForKey("currencySymbol")]
-        billField.text = currencySymbol
+        if (defaults.objectForKey("bill") != nil && defaults.objectForKey("expiryTime") != nil) {
+            let now = NSDate()
+            let expiryTime = String(defaults.objectForKey("expiryTime")!)
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ssZ"
+            let expiration = dateFormatter.dateFromString(expiryTime)!
+            
+            switch now.compare(expiration) {
+            case .OrderedAscending, .OrderedSame:
+                billField.text = (defaults.objectForKey("bill") as! String)
+            case .OrderedDescending:
+                billField.text = currencySymbol
+            }
+        } else {
+            billField.text = currencySymbol
+        }
     }
     
     @IBAction func billFieldChange(sender: AnyObject) {
@@ -116,18 +130,90 @@ class ViewController: UIViewController, UITextFieldDelegate {
         var billString = String(billField.text!)
         billString = billString.stringByReplacingOccurrencesOfString(",", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
         
-        let bill = Float(billString) ?? 0
-        let tip = ((bill * percentageSlider.value) / 100) / peopleSlider.value
-        let total = (bill / peopleSlider.value) + tip
+        billString = validateBillLabel(billString)
+        
+        let bill = Double(billString) ?? 0
+        let percentage = Double(percentageSlider.value)
+        let people = Double(peopleSlider.value)
+        let tip = ((bill * percentage) / 100) / people
+        let total = (bill / people) + tip
         
         let formatter = NSNumberFormatter()
         formatter.numberStyle = .DecimalStyle
-        formatter.groupingSeparator = ","
-        billField.text = formatter.stringFromNumber(bill)
         formatter.minimumFractionDigits = 2;
         formatter.maximumFractionDigits = 2;
         tipLabel.text = currencySymbol + formatter.stringFromNumber(tip)!
         totalLabel.text = currencySymbol + formatter.stringFromNumber(total)!
+    }
+    
+    func fieldFormatter(billCharacters: [Character]) -> String {
+        if (billCharacters.count > 3) {
+            if (billCharacters.indexOf(".") != nil) {
+                let index = billCharacters.indexOf(".")
+                var intArray = Array(billCharacters[0...index!-1])
+                let floatArray = Array(billCharacters[index!...billCharacters.endIndex-1])
+                
+                if (intArray.count > 3) {
+                    var reversedArray = Array(intArray.reverse())
+                    for i in 0 ..< reversedArray.count {
+                        if (i != 0 && i % 3 == 0) {
+                            print(i%3)
+                            print(i)
+                            reversedArray.insert(",", atIndex: i+(i/3-1))
+                        }
+                    }
+                    intArray = Array(reversedArray.reverse())
+                }
+                return String(intArray + floatArray)
+            } else {
+                var reversedArray = Array(billCharacters.reverse())
+                for i in 0 ..< reversedArray.count {
+                    if (i != 0 && i % 3 == 0) {
+                        reversedArray.insert(",", atIndex: i+(i/3-1))
+                    }
+                }
+                
+                return String(Array(reversedArray.reverse()))
+            }
+        }
+        
+        return String(billCharacters)
+    }
+    
+    func validateBillLabel (billString: String) -> String {
+        let permitedCharacters = ["0","1","2","3","4","5","6","7","8","9","."]
+        let maxLengthBill = 10
+        let maxLengthTotal = 12
+        var billCharacters = Array(billString.characters)
+        let totalCharacters = Array(totalLabel.text!.characters)
+        
+        
+        if (permitedCharacters.indexOf(String(billCharacters[billCharacters.endIndex-1])) == nil) {
+            billCharacters.popLast()
+        }
+        
+        if (totalCharacters.count > maxLengthTotal) {
+            billCharacters.popLast()
+        }
+        
+        if (billCharacters.count > maxLengthBill) {
+            billCharacters.popLast()
+        }
+        
+        if (billCharacters[billCharacters.endIndex-1] == ".") {
+            if (billCharacters.count < 2) {
+                billCharacters.popLast()
+            } else {
+                let subArray = billCharacters[0...billCharacters.endIndex-2]
+                if (subArray.indexOf(".") != nil) {
+                    billCharacters.popLast()
+                }
+            }
+        }
+        
+        let formattedField = fieldFormatter(billCharacters)
+        billField.text = formattedField
+        return formattedField.stringByReplacingOccurrencesOfString(",", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -192,15 +278,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
             self.topView.frame = CGRectMake(0, 115, self.topView.frame.size.width, self.topView.frame.size.height);
             self.bottomView.frame = CGRectMake(0, 287, self.bottomView.frame.size.width, self.bottomView.frame.size.height);
         }
-    }
-    
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange,
-                   replacementString string: String) -> Bool {
-        let maxLength = 9
-        let currentString: NSString = textField.text!
-        let newString: NSString =
-            currentString.stringByReplacingCharactersInRange(range, withString: string)
-        return newString.length <= maxLength
     }
     
     func changeColorTheme(style: String, kb: String, lr: Float, lg: Float, lb: Float, dr: Float, dg: Float, db: Float, img: String) {
@@ -292,6 +369,13 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+        
+        defaults.setFloat(15, forKey: "tipPercentage")
+        defaults.setObject(billField.text!, forKey: "bill")
+        let now = NSDate()
+        let futureDate = now.dateByAddingTimeInterval(1.0 * 60.0)
+        defaults.setObject(futureDate, forKey: "expiryTime")
+        defaults.synchronize()
     }
     
     override func viewDidDisappear(animated: Bool) {
