@@ -55,7 +55,7 @@ class ViewController: UIViewController {
             switch now.compare(expiration) {
             case .OrderedAscending, .OrderedSame:
                 billField.text = (defaults.objectForKey("bill") as! String)
-                if (currencyValues.indexOf(billField.text!) != nil) {
+                if (currencyValues.indexOf(billField.text!) == nil) {
                     calculateTip()
                 }
             case .OrderedDescending:
