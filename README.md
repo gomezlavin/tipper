@@ -25,8 +25,9 @@ The following **additional** features are implemented:
 - [x] Using a slider to split the bill and tip equally, handy when going out with friends
 - [x] Select color theme: Dark, light, blue and red
 - [x] Adjust the status bar theme based on the app color theme
-- [x] Input validation: users can't enter random keys when using the computer keyboard, can't enter more than one period, and are restricted to a fixed number of digits on the bill and total fields
+- [x] Input validation: users can't enter random keys when using the computer keyboard, can't enter more than one period, are restricted to a fixed number of digits on the bill and total fields, can't enter more than one zero and can't have preceding zeros to other digits
 - [x] Bill field format: bill text field is also formatted with thousands separators
+- [x] Created an app icon
 
 
 ## Video Walkthrough 
