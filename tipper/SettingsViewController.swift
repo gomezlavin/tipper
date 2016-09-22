@@ -33,7 +33,7 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var themeSectionLabel: UILabel!
     @IBOutlet weak var settingsThemeControl: UISegmentedControl!
     
-    let defaults = NSUserDefaults.standardUserDefaults()
+    let defaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,10 +43,10 @@ class SettingsViewController: UIViewController {
         currencySection.layer.cornerRadius = 5.0
         themeSection.layer.cornerRadius = 5.0
  
-        let tipPercentage = defaults.floatForKey("tipPercentage")
-        let peopleNumber = defaults.floatForKey("peopleNumber")
-        let currencySymbol = defaults.integerForKey("currencySymbol")
-        let colorTheme = defaults.integerForKey("colorTheme")
+        let tipPercentage = defaults.float(forKey: "tipPercentage")
+        let peopleNumber = defaults.float(forKey: "peopleNumber")
+        let currencySymbol = defaults.integer(forKey: "currencySymbol")
+        let colorTheme = defaults.integer(forKey: "colorTheme")
         
         settingsTipSlider.setValue(tipPercentage, animated: true)
         settingsTipLabel.text = String(format: "%.0f", tipPercentage)
@@ -70,7 +70,7 @@ class SettingsViewController: UIViewController {
     }
     
     // Function to change the app's color theme in this view based on user defaults
-    func changeColorTheme(style: String, kb: String, lr: Float, lg: Float, lb: Float, dr: Float, dg: Float, db: Float, img: String) {
+    func changeColorTheme(_ style: String, kb: String, lr: Float, lg: Float, lb: Float, dr: Float, dg: Float, db: Float, img: String) {
         let lr = CGFloat(lr)
         let lg = CGFloat(lg)
         let lb = CGFloat(lb)
@@ -89,7 +89,7 @@ class SettingsViewController: UIViewController {
         
         switch style {
         case "dark":
-            UIApplication.sharedApplication().statusBarStyle = .LightContent
+            UIApplication.shared.statusBarStyle = .lightContent
             lfr = CGFloat(1.0)
             lfg = CGFloat(1.0)
             lfb = CGFloat(1.0)
@@ -97,7 +97,7 @@ class SettingsViewController: UIViewController {
             dfg = lfg
             dfb = lfb
         case "light":
-            UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
+            UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
             lfr = CGFloat(0.0)
             lfg = CGFloat(0.0)
             lfb = CGFloat(0.0)
@@ -108,7 +108,7 @@ class SettingsViewController: UIViewController {
             shg = CGFloat(0.0)
             shb = CGFloat(0.0)
         case "blue", "red":
-            UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
+            UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
             lfr = lr
             lfg = lg
             lfb = lb
@@ -150,7 +150,7 @@ class SettingsViewController: UIViewController {
         settingsThemeControl.tintColor = UIColor(red: dfr, green: dfg, blue: dfb, alpha: 1.0)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         defaults.synchronize()
     }
@@ -160,25 +160,25 @@ class SettingsViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func settingsTipSliderChange(sender: AnyObject) {
+    @IBAction func settingsTipSliderChange(_ sender: AnyObject) {
         let roundedValue = round(self.settingsTipSlider.value)
         settingsTipSlider.setValue(roundedValue, animated: true)
         settingsTipLabel.text = String(format: "%.0f", roundedValue)
-        defaults.setFloat(roundedValue, forKey: "tipPercentage")
+        defaults.set(roundedValue, forKey: "tipPercentage")
     }
 
-    @IBAction func settingsPeopleSliderChange(sender: AnyObject) {
+    @IBAction func settingsPeopleSliderChange(_ sender: AnyObject) {
         let roundedValue = round(self.settingsPeopleSlider.value)
         settingsPeopleSlider.setValue(roundedValue, animated: true)
         settingsPeopleLabel.text = String(format: "%.0f", roundedValue)
-        defaults.setFloat(roundedValue, forKey: "peopleNumber")
+        defaults.set(roundedValue, forKey: "peopleNumber")
     }
     
-    @IBAction func currencyControlChange(sender: AnyObject) {
-        defaults.setInteger(settingsCurrencyControl.selectedSegmentIndex, forKey: "currencySymbol")
+    @IBAction func currencyControlChange(_ sender: AnyObject) {
+        defaults.set(settingsCurrencyControl.selectedSegmentIndex, forKey: "currencySymbol")
     }
     
-    @IBAction func themeControlChange(sender: AnyObject) {
+    @IBAction func themeControlChange(_ sender: AnyObject) {
         switch (settingsThemeControl.selectedSegmentIndex) {
         case (0):
             changeColorTheme("dark", kb: "dark", lr: 0.3686, lg: 0.3686, lb: 0.3686, dr: 0.098, dg: 0.098, db: 0.098, img: "peopleWhite")
@@ -192,6 +192,6 @@ class SettingsViewController: UIViewController {
             print("Default")
         }
         
-        defaults.setInteger(settingsThemeControl.selectedSegmentIndex, forKey: "colorTheme")
+        defaults.set(settingsThemeControl.selectedSegmentIndex, forKey: "colorTheme")
     }
 }

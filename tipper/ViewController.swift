@@ -29,36 +29,36 @@ class ViewController: UIViewController {
     
     var currencySymbol = ""
     let currencyValues = ["$", "£", "€", "¥", "₩"]
-    let defaults = NSUserDefaults.standardUserDefaults()
+    let defaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Setting default NSUserDefaults for the first time the app is used
-        if (defaults.objectForKey("tipPercentage") == nil) {
-            defaults.setFloat(15, forKey: "tipPercentage")
-            defaults.setFloat(1, forKey: "peopleNumber")
-            defaults.setInteger(0, forKey: "currencySymbol")
-            defaults.setInteger(0, forKey: "colorTheme")
+        if (defaults.object(forKey: "tipPercentage") == nil) {
+            defaults.set(15, forKey: "tipPercentage")
+            defaults.set(1, forKey: "peopleNumber")
+            defaults.set(0, forKey: "currencySymbol")
+            defaults.set(0, forKey: "colorTheme")
             defaults.synchronize()
         }
         
         // Save the value of the bill field unless 10 minutes have passed by
-        currencySymbol = currencyValues[defaults.integerForKey("currencySymbol")]
-        if (defaults.objectForKey("bill") != nil && defaults.objectForKey("expiryTime") != nil) {
-            let now = NSDate()
-            let expiryTime = String(defaults.objectForKey("expiryTime")!)
-            let dateFormatter = NSDateFormatter()
+        currencySymbol = currencyValues[defaults.integer(forKey: "currencySymbol")]
+        if (defaults.object(forKey: "bill") != nil && defaults.object(forKey: "expiryTime") != nil) {
+            let now = Date()
+            let expiryTime = String(describing: defaults.object(forKey: "expiryTime")!)
+            let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ssZ"
-            let expiration = dateFormatter.dateFromString(expiryTime)!
+            let expiration = dateFormatter.date(from: expiryTime)!
             
             switch now.compare(expiration) {
-            case .OrderedAscending, .OrderedSame:
-                billField.text = (defaults.objectForKey("bill") as! String)
-                if (currencyValues.indexOf(billField.text!) == nil) {
+            case .orderedAscending, .orderedSame:
+                billField.text = (defaults.object(forKey: "bill") as! String)
+                if (currencyValues.index(of: billField.text!) == nil) {
                     calculateTip()
                 }
-            case .OrderedDescending:
+            case .orderedDescending:
                 billField.text = currencySymbol
             }
         } else {
@@ -66,8 +66,8 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBAction func billFieldChange(sender: AnyObject) {
-        let billString = String(billField.text!)
+    @IBAction func billFieldChange(_ sender: AnyObject) {
+        let billString = String(billField.text!)!
         
         if (!billString.isEmpty && billString[billString.startIndex] == currencySymbol[currencySymbol.startIndex]) {
             let newString = String(billString.characters.dropFirst(1))
@@ -75,7 +75,7 @@ class ViewController: UIViewController {
         }
         
         if (billField.text != "") {
-            UIView.animateWithDuration(0.1, animations: {
+            UIView.animate(withDuration: 0.1, animations: {
                 self.percentageSlider.alpha = 1
                 self.percentageLabel.alpha = 1
                 self.percentageIcon.alpha = 1
@@ -88,16 +88,16 @@ class ViewController: UIViewController {
                 self.totalLabel.alpha = 1
             })
             
-            UIView.animateWithDuration(0.4, animations: {
-                self.topView.frame = CGRectMake(0, 0, self.topView.frame.size.width, self.topView.frame.size.height);
-                self.bottomView.frame = CGRectMake(0, 176, self.bottomView.frame.size.width, self.bottomView.frame.size.height);
+            UIView.animate(withDuration: 0.4, animations: {
+                self.topView.frame = CGRect(x: 0, y: 0, width: self.topView.frame.size.width, height: self.topView.frame.size.height);
+                self.bottomView.frame = CGRect(x: 0, y: 176, width: self.bottomView.frame.size.width, height: self.bottomView.frame.size.height);
             })
             calculateTip()
         }
         
         if (billField.text == "") {
             billField.text = currencySymbol
-            UIView.animateWithDuration(0.1, animations: {
+            UIView.animate(withDuration: 0.1, animations: {
                 self.percentageSlider.alpha = 0
                 self.percentageLabel.alpha = 0
                 self.percentageIcon.alpha = 0
@@ -110,14 +110,14 @@ class ViewController: UIViewController {
                 self.totalLabel.alpha = 0
             })
             
-            UIView.animateWithDuration(0.4, animations: {
-                self.topView.frame = CGRectMake(0, 115, self.topView.frame.size.width, self.topView.frame.size.height);
-                self.bottomView.frame = CGRectMake(0, 287, self.bottomView.frame.size.width, self.bottomView.frame.size.height);
+            UIView.animate(withDuration: 0.4, animations: {
+                self.topView.frame = CGRect(x: 0, y: 115, width: self.topView.frame.size.width, height: self.topView.frame.size.height);
+                self.bottomView.frame = CGRect(x: 0, y: 287, width: self.bottomView.frame.size.width, height: self.bottomView.frame.size.height);
             })
         }
     }
     
-    @IBAction func percentageSliderChange(sender: AnyObject) {
+    @IBAction func percentageSliderChange(_ sender: AnyObject) {
         // Locking slider intervals to fixed integer positions
         let roundedValue = round(self.percentageSlider.value)
         percentageSlider.setValue(roundedValue, animated: true)
@@ -125,7 +125,7 @@ class ViewController: UIViewController {
         calculateTip()
     }
     
-    @IBAction func peopleSliderChange(sender: AnyObject) {
+    @IBAction func peopleSliderChange(_ sender: AnyObject) {
         // Locking slider intervals to fixed integer positions
         let roundedValue = round(self.peopleSlider.value)
         peopleSlider.setValue(roundedValue, animated: true)
@@ -134,9 +134,8 @@ class ViewController: UIViewController {
     }
     
     func calculateTip() {
-        var billString = String(billField.text!)
-        billString = billString.stringByReplacingOccurrencesOfString(",", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-        
+        var billString = String(billField.text!)!
+        billString = billString.replacingOccurrences(of: ",", with: "", options: NSString.CompareOptions.literal, range: nil)
         billString = validateBillLabel(billString)
         
         let bill = Double(billString) ?? 0
@@ -145,42 +144,42 @@ class ViewController: UIViewController {
         let tip = ((bill * percentage) / 100) / people
         let total = (bill / people) + tip
         
-        let formatter = NSNumberFormatter()
-        formatter.numberStyle = .DecimalStyle
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
         formatter.minimumFractionDigits = 2;
         formatter.maximumFractionDigits = 2;
-        tipLabel.text = currencySymbol + formatter.stringFromNumber(tip)!
-        totalLabel.text = currencySymbol + formatter.stringFromNumber(total)!
+        tipLabel.text = currencySymbol + formatter.string(from: NSNumber.init(value: tip))!
+        totalLabel.text = currencySymbol + formatter.string(from: NSNumber.init(value: total))!
     }
     
     // Function to format the bill field using comma as group separator
     // Had to build function because formatter wasn't allowing "." in the field for some reason
-    func fieldFormatter(billCharacters: [Character]) -> String {
+    func fieldFormatter(_ billCharacters: [Character]) -> String {
         if (billCharacters.count > 3) {
-            if (billCharacters.indexOf(".") != nil) {
-                let index = billCharacters.indexOf(".")
+            if (billCharacters.index(of: ".") != nil) {
+                let index = billCharacters.index(of: ".")
                 var intArray = Array(billCharacters[0...index!-1])
                 let floatArray = Array(billCharacters[index!...billCharacters.endIndex-1])
                 
                 if (intArray.count > 3) {
-                    var reversedArray = Array(intArray.reverse())
+                    var reversedArray = Array(intArray.reversed())
                     for i in 0 ..< reversedArray.count {
                         if (i != 0 && i % 3 == 0) {
-                            reversedArray.insert(",", atIndex: i+(i/3-1))
+                            reversedArray.insert(",", at: i+(i/3-1))
                         }
                     }
-                    intArray = Array(reversedArray.reverse())
+                    intArray = Array(reversedArray.reversed())
                 }
                 return String(intArray + floatArray)
             } else {
-                var reversedArray = Array(billCharacters.reverse())
+                var reversedArray = Array(billCharacters.reversed())
                 for i in 0 ..< reversedArray.count {
                     if (i != 0 && i % 3 == 0) {
-                        reversedArray.insert(",", atIndex: i+(i/3-1))
+                        reversedArray.insert(",", at: i+(i/3-1))
                     }
                 }
                 
-                return String(Array(reversedArray.reverse()))
+                return String(Array(reversedArray.reversed()))
             }
         }
         
@@ -188,7 +187,7 @@ class ViewController: UIViewController {
     }
     
     // Function for restrict user input into the billField
-    func validateBillLabel (billString: String) -> String {
+    func validateBillLabel (_ billString: String) -> String {
         let permitedCharacters = ["0","1","2","3","4","5","6","7","8","9","."]
         let maxLengthBill = 10
         let maxLengthTotal = 12
@@ -196,57 +195,57 @@ class ViewController: UIViewController {
         let totalCharacters = Array(totalLabel.text!.characters)
         
         // Only allow digits and period
-        if (permitedCharacters.indexOf(String(billCharacters[billCharacters.endIndex-1])) == nil) {
-            billCharacters.popLast()
+        if (permitedCharacters.index(of: String(billCharacters[billCharacters.endIndex-1])) == nil) {
+            _ = billCharacters.popLast()
         }
         
         // Limit the max length of the Total Field
         if (totalCharacters.count > maxLengthTotal) {
-            billCharacters.popLast()
+            _ = billCharacters.popLast()
         }
         
         // Limit the max length of the Bill Field
         if (billCharacters.count > maxLengthBill) {
-            billCharacters.popLast()
+            _ = billCharacters.popLast()
         }
         
         // Allow only one zero
         if (billCharacters.count > 1 && billCharacters[0] == "0" && billCharacters[1] == "0") {
-            billCharacters.popLast()
+            _ = billCharacters.popLast()
         }
         
         // Trim starting zero if not followed by period
         if (billCharacters.count > 1 && billCharacters[0] == "0" && billCharacters[1] != ".") {
-            billCharacters.removeFirst()
+            _ = billCharacters.removeFirst()
         }
         
         // Allowing only one period
         if (billCharacters.endIndex > 0 && billCharacters[billCharacters.endIndex-1] == ".") {
             if (billCharacters.count < 2) {
-                billCharacters.popLast()
+                _ = billCharacters.popLast()
             } else {
                 let subArray = billCharacters[0...billCharacters.endIndex-2]
-                if (subArray.indexOf(".") != nil) {
-                    billCharacters.popLast()
+                if (subArray.index(of: ".") != nil) {
+                    _ = billCharacters.popLast()
                 }
             }
         }
         
         let formattedField = fieldFormatter(billCharacters)
         billField.text = formattedField
-        return formattedField.stringByReplacingOccurrencesOfString(",", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        return formattedField.replacingOccurrences(of: ",", with: "", options: NSString.CompareOptions.literal, range: nil)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         // Loading user defaults
-        let tipPercentage = defaults.floatForKey("tipPercentage")
-        let peopleNumber = defaults.floatForKey("peopleNumber")
-        currencySymbol = currencyValues[defaults.integerForKey("currencySymbol")]
-        let colorTheme = defaults.integerForKey("colorTheme")
+        let tipPercentage = defaults.float(forKey: "tipPercentage")
+        let peopleNumber = defaults.float(forKey: "peopleNumber")
+        currencySymbol = currencyValues[defaults.integer(forKey: "currencySymbol")]
+        let colorTheme = defaults.integer(forKey: "colorTheme")
         
-        if (currencyValues.indexOf(billField.text!) != nil) {
+        if (currencyValues.index(of: billField.text!) != nil) {
             billField.text = currencySymbol
         }
         
@@ -255,8 +254,8 @@ class ViewController: UIViewController {
         peopleSlider.setValue(peopleNumber, animated: true)
         peopleLabel.text = String(format: "%.0f", peopleNumber)
         
-        tipLabel.text!.removeAtIndex(tipLabel.text!.startIndex)
-        totalLabel.text!.removeAtIndex(totalLabel.text!.startIndex)
+        tipLabel.text!.remove(at: tipLabel.text!.startIndex)
+        totalLabel.text!.remove(at: totalLabel.text!.startIndex)
         tipLabel.text = currencySymbol + tipLabel.text!
         totalLabel.text = currencySymbol + totalLabel.text!
         
@@ -284,8 +283,8 @@ class ViewController: UIViewController {
             tipLabel.alpha = 1
             totalNameLabel.alpha = 1
             self.totalLabel.alpha = 1
-            self.topView.frame = CGRectMake(0, 0, self.topView.frame.size.width, self.topView.frame.size.height);
-            self.bottomView.frame = CGRectMake(0, 176, self.bottomView.frame.size.width, self.bottomView.frame.size.height);
+            self.topView.frame = CGRect(x: 0, y: 0, width: self.topView.frame.size.width, height: self.topView.frame.size.height);
+            self.bottomView.frame = CGRect(x: 0, y: 176, width: self.bottomView.frame.size.width, height: self.bottomView.frame.size.height);
         } else {
             self.percentageSlider.alpha = 0
             self.percentageLabel.alpha = 0
@@ -297,13 +296,13 @@ class ViewController: UIViewController {
             self.tipLabel.alpha = 0
             self.totalNameLabel.alpha = 0
             self.totalLabel.alpha = 0
-            self.topView.frame = CGRectMake(0, 115, self.topView.frame.size.width, self.topView.frame.size.height);
-            self.bottomView.frame = CGRectMake(0, 287, self.bottomView.frame.size.width, self.bottomView.frame.size.height);
+            self.topView.frame = CGRect(x: 0, y: 115, width: self.topView.frame.size.width, height: self.topView.frame.size.height);
+            self.bottomView.frame = CGRect(x: 0, y: 287, width: self.bottomView.frame.size.width, height: self.bottomView.frame.size.height);
         }
     }
     
     // Function to change the app's color theme in this view based on user defaults
-    func changeColorTheme(style: String, kb: String, lr: Float, lg: Float, lb: Float, dr: Float, dg: Float, db: Float, img: String) {
+    func changeColorTheme(_ style: String, kb: String, lr: Float, lg: Float, lb: Float, dr: Float, dg: Float, db: Float, img: String) {
         let lr = CGFloat(lr)
         let lg = CGFloat(lg)
         let lb = CGFloat(lb)
@@ -319,8 +318,8 @@ class ViewController: UIViewController {
         
         switch style {
         case "dark":
-            self.billField.keyboardAppearance = UIKeyboardAppearance.Dark
-            UIApplication.sharedApplication().statusBarStyle = .LightContent
+            self.billField.keyboardAppearance = UIKeyboardAppearance.dark
+            UIApplication.shared.statusBarStyle = .lightContent
             lfr = CGFloat(1.0)
             lfg = CGFloat(1.0)
             lfb = CGFloat(1.0)
@@ -328,8 +327,8 @@ class ViewController: UIViewController {
             dfg = lfg
             dfb = lfb
         case "light":
-            self.billField.keyboardAppearance = UIKeyboardAppearance.Light
-            UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
+            self.billField.keyboardAppearance = UIKeyboardAppearance.light
+            UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
             lfr = CGFloat(0.0)
             lfg = CGFloat(0.0)
             lfb = CGFloat(0.0)
@@ -337,8 +336,8 @@ class ViewController: UIViewController {
             dfg = lfg
             dfb = lfb
         case "blue":
-            self.billField.keyboardAppearance = UIKeyboardAppearance.Light
-            UIApplication.sharedApplication().statusBarStyle = .LightContent
+            self.billField.keyboardAppearance = UIKeyboardAppearance.light
+            UIApplication.shared.statusBarStyle = .lightContent
             lfr = lr
             lfg = lg
             lfb = lb
@@ -346,8 +345,8 @@ class ViewController: UIViewController {
             dfg = dg
             dfb = db
         case "red":
-            self.billField.keyboardAppearance = UIKeyboardAppearance.Light
-            UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
+            self.billField.keyboardAppearance = UIKeyboardAppearance.light
+            UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
             lfr = lr
             lfg = lg
             lfb = lb
@@ -385,24 +384,24 @@ class ViewController: UIViewController {
         self.totalLabel.textColor = UIColor(red: lfr, green: lfg, blue: lfb, alpha: 1.0)
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         billField.becomeFirstResponder()
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         // Saving billField value for 10 minutes
-        defaults.setFloat(15, forKey: "tipPercentage")
-        defaults.setObject(billField.text!, forKey: "bill")
-        let now = NSDate()
-        let futureDate = now.dateByAddingTimeInterval(10.0 * 60.0)
-        defaults.setObject(futureDate, forKey: "expiryTime")
+        defaults.set(15, forKey: "tipPercentage")
+        defaults.set(billField.text!, forKey: "bill")
+        let now = Date()
+        let futureDate = now.addingTimeInterval(10.0 * 60.0)
+        defaults.set(futureDate, forKey: "expiryTime")
         defaults.synchronize()
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
     }
     
